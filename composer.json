@@ -1,0 +1,13 @@
+{
+  "name": "beapi/recovery-mode-email",
+  "description": "Allow to change the default email for WP Recovery mode",
+  "minimum-stability": "stable",
+  "license": "GPL-2.0",
+  "authors": [
+    {
+      "name": "BeAPI",
+      "email": "human@beapi.fr"
+    }
+  ],
+  "type": "wordpress-muplugin"
+}
