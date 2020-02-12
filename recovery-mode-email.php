@@ -122,7 +122,7 @@ class Recovery_Mode_Email {
 	/**
 	 * Validate email address
 	 *
-	 * @param $input
+	 * @param array $input
 	 *
 	 * @return array
 	 *
@@ -130,7 +130,7 @@ class Recovery_Mode_Email {
 	 *
 	 * @author François de Cambourg
 	 */
-	public function validate_options( $input ) {
+	public function validate_options( array $input ) {
 		$valid                         = array();
 		$valid['error_handling_email'] = sanitize_email( $input['error_handling_email'] );
 
@@ -148,11 +148,11 @@ class Recovery_Mode_Email {
 	}
 
 	/**
-	 * Validate email address
+	 * Bypass email address for recovery_mode_email core hook
 	 *
-	 * @param $email
+	 * @param array $email
 	 *
-	 * @return string
+	 * @return array
 	 *
 	 * @author François de Cambourg
 	 */
