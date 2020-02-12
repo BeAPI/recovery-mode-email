@@ -159,12 +159,12 @@ class Recovery_Mode_Email {
 	public function bypass_error_recipient( $email ) {
 		$error_email_array = get_option( 'beapi_error_email_options' );
 		if ( empty( $error_email_array ) || ! is_array( $error_email_array ) ) {
-			return false;
+			return $email;
 		}
 
 		$error_email = $error_email_array['error_handling_email'];
 		if ( empty( $error_email ) || ! is_email( $error_email ) ) {
-			return false;
+			return $email;
 		}
 
 		if ( ! $error_email ) {
