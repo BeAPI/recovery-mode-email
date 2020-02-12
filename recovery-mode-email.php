@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Be API - Recovery Mode Email
- * Description: Bypass default recipient for error emails (WP 5.2 +)
+ * Description: Give the possibility to choose another recipient for WordPress recovery emails (WP 5.2 +)
  * Version: 0.1
  * Author: BE API Technical team
  * Author URI: https://www.beapi.fr
