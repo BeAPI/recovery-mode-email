@@ -8,7 +8,9 @@
  * Text domain: recovery-mode-email
  */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * nothing after this happens if version is not equal or higher
@@ -50,9 +52,9 @@ class Recovery_Mode_Email {
 	 * Register plugin's hooks
 	 */
 	public function hooks() {
-		\add_action( 'init', [ $this, 'init' ] );
-		\add_action( 'admin_init', [ $this, 'declare_error_email_setting' ] );
-		\add_filter( 'recovery_mode_email', [ $this, 'bypass_error_recipient' ] );
+		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'admin_init', [ $this, 'declare_error_email_setting' ] );
+		add_filter( 'recovery_mode_email', [ $this, 'bypass_error_recipient' ] );
 	}
 
 	/**
@@ -94,9 +96,9 @@ class Recovery_Mode_Email {
 	/**
 	 * Echo new field markup, callback param 3 of add_settings_field below
 	 *
+	 * @return void
 	 * @see beapi_declare_error_email_setting()
 	 *
-	 * @return void | string
 	 * @author François de Cambourg
 	 *
 	 */
@@ -112,23 +114,24 @@ class Recovery_Mode_Email {
 		}
 
 		?>
-		<input id="error_handling_email" name="beapi_error_email_options[error_handling_email]" type="email" value="<?php echo esc_attr( $error_email ); ?>"/>
+		<input id="error_handling_email" name="beapi_error_email_options[error_handling_email]" type="email"
+			   value="<?php echo esc_attr( $error_email ); ?>"/>
 		<?php esc_html_e( 'Fatal Error emails goes to this adress instead of default administrator roles.', 'recovery-mode-email' );
 	}
 
 	/**
 	 * Validate email address
-     *
-	 * @param $input
+	 *
+	 * @param array $input
+	 *
 	 * @return array
-     *
+	 *
 	 * @see https://kellenmace.com/wordpress-hook-options-page-save/
-     *
+	 *
 	 * @author François de Cambourg
 	 */
-	public function validate_options( $input ) {
-
-		$valid = array();
+	public function validate_options( array $input ) {
+		$valid                         = array();
 		$valid['error_handling_email'] = sanitize_email( $input['error_handling_email'] );
 
 		// Notice if address is not good
@@ -145,22 +148,23 @@ class Recovery_Mode_Email {
 	}
 
 	/**
-	 * Validate email address
-     *
-	 * @param $email
-	 * @return string
+	 * Bypass email address for recovery_mode_email core hook
+	 *
+	 * @param array $email
+	 *
+	 * @return array
 	 *
 	 * @author François de Cambourg
 	 */
 	public function bypass_error_recipient( $email ) {
 		$error_email_array = get_option( 'beapi_error_email_options' );
 		if ( empty( $error_email_array ) || ! is_array( $error_email_array ) ) {
-			return false;
+			return $email;
 		}
 
 		$error_email = $error_email_array['error_handling_email'];
 		if ( empty( $error_email ) || ! is_email( $error_email ) ) {
-			return false;
+			return $email;
 		}
 
 		if ( ! $error_email ) {
@@ -168,6 +172,7 @@ class Recovery_Mode_Email {
 		}
 
 		$email['to'] = $error_email;
+
 		return $email;
 	}
 }
